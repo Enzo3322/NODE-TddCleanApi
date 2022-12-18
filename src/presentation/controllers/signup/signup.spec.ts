@@ -1,11 +1,9 @@
-import { SingUpController } from './singup'
-import { InvalidParamError, MissingParamError, ServerError } from '../errors'
-import { EmailValidator } from '../protocols'
-import { AddAccount, AddAccountModel } from '../../domain/usecases/add-account'
-import { AccountModel } from '../../domain/models/account'
+import { SignUpController } from './signup'
+import { InvalidParamError, MissingParamError, ServerError } from '../../errors'
+import { AccountModel, AddAccount, AddAccountModel, EmailValidator } from './signup-protocols'
 
 interface SutTypes {
-	sut: SingUpController
+	sut: SignUpController
 	emailValidatorStub: EmailValidator
 	addAccountStub: AddAccount
 }
@@ -37,13 +35,13 @@ const makeAddAccount = (): AddAccount => {
 const makeSut = (): SutTypes => {
 	const emailValidatorStub = makeEmailValidator()
 	const addAccountStub = makeAddAccount()
-	const sut = new SingUpController(emailValidatorStub, addAccountStub)
+	const sut = new SignUpController(emailValidatorStub, addAccountStub)
 	return {
 		sut, emailValidatorStub, addAccountStub
 	}
 }
 
-describe('SingUp Controller', () => {
+describe('SignUp Controller', () => {
 	test('Should return 400 if no name is provided', () => {
 		const { sut } = makeSut()
 		const httpRequest = {

@@ -13,5 +13,12 @@ export const MongoHelper = {
 
 	async disconnect (): Promise<void>  {
 		await this.client.close()
+	},
+
+	async getCollection (name: string): Promise<any> {
+		if (!this.client?.isConnected()) {
+			await this.connect(process.env.MONGO_URL)
+		}	
+		return this.client.db().collection(name)
 	}
 }

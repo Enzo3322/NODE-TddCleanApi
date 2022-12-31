@@ -16,9 +16,6 @@ export const MongoHelper = {
 	},
 
 	async getCollection (name: string): Promise<any> {
-		if (!this.client?.isConnected()) {
-			await this.connect(process.env.MONGO_URL)
-		}	
 		return this.client.db().collection(name)
 	},
 
